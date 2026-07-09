@@ -40,11 +40,11 @@ The main objectives of the project are to:
 
 - A strong and stable positive relationship is found between distance traveled and ride
   fare.
-- The baseline linear regression explains approximately 67% of the variance in fares.
+- The expanded linear regression explains approximately 70.6% of the variance in fares.
 - Machine learning models significantly outperform linear specifications.
-- Gradient boosting achieves the best overall performance, with RMSE around 2.46 and
-  MAE around 1.73.
-- Random forest and neural network models show comparable accuracy.
+- The best-performing model is the third neural network architecture, with RMSE of
+  1.9339 and MAE of 1.2592 on the official test set.
+- Gradient boosting is the closest alternative, with RMSE of 1.9632 and MAE of 1.3015.
 - High predictive accuracy is achieved using a small set of features, highlighting the
   effectiveness of distance-based pricing models.
 
@@ -84,17 +84,20 @@ predictive-analytics-ride-fare-estimation/
 |
 |-- README.md
 |-- requirements.txt
-|-- data/
-|   `-- uber.csv
-|-- notebooks/
-|   `-- 00_end_to_end_ride_fare_prediction.ipynb
-|-- figures/
-|   |-- correlation_matrices.png
-|   |-- spatial_distributions.png
-|   |-- model_comparisons.png
-|   `-- ...
-`-- reports/
-    `-- predictive-modeling-urban-ride-fares.pdf
+`-- uber-fare-prediction-machine-learning/
+    |-- data/
+    |   `-- uber.csv
+    |-- docs/
+    |   `-- business_intelligence_final_project_guidelines.pdf
+    |-- figures/
+    |   |-- 1.png
+    |   |-- 2.png
+    |   `-- ...
+    |-- report/
+    |   |-- final_report.tex
+    |   `-- final_report.pdf
+    `-- scripts/
+        `-- ride_fare_prediction_analysis.ipynb
 ```
 
 ---
@@ -106,11 +109,12 @@ The project can be executed locally or in Google Colab using Python 3.10 or late
 Install the main dependencies with:
 
 ```bash
-pip install numpy pandas scikit-learn tensorflow matplotlib seaborn
+pip install -r requirements.txt
 ```
 
-Running the main notebook reproduces the figures, models, and results reported in the
-final document.
+Running `uber-fare-prediction-machine-learning/scripts/ride_fare_prediction_analysis.ipynb`
+reproduces the figures, models, and results reported in
+`uber-fare-prediction-machine-learning/report/final_report.pdf`.
 
 ---
 
