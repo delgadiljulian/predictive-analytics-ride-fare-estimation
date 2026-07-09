@@ -209,6 +209,8 @@ __marimo__/
 # Local delivery package
 uber-fare-prediction-machine-learning/tp_final_bi_2025_delgadillo/
 uber-fare-prediction-machine-learning/tp_final_bi_2025_delgadillo.zip
+uber-fare-prediction-machine-learning/original_submission/
+uber-fare-prediction-machine-learning/original_submission.zip
 
 # LaTeX build artifacts
 *.aux
