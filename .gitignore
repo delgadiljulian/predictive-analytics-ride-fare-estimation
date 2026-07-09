@@ -207,8 +207,8 @@ marimo/_lsp/
 __marimo__/
 
 # Local delivery package
-uber-fare-prediction-machine-learning/entrega/
-uber-fare-prediction-machine-learning/entrega.zip
+uber-fare-prediction-machine-learning/tp_final_bi_2025_delgadillo/
+uber-fare-prediction-machine-learning/tp_final_bi_2025_delgadillo.zip
 
 # LaTeX build artifacts
 *.aux
