@@ -42,9 +42,9 @@ The main objectives of the project are to:
   fare.
 - The expanded linear regression explains approximately 70.6% of the variance in fares.
 - Machine learning models significantly outperform linear specifications.
-- The best-performing model is the third neural network architecture, with RMSE of
-  1.9339 and MAE of 1.2592 on the official test set.
-- Gradient boosting is the closest alternative, with RMSE of 1.9632 and MAE of 1.3015.
+- The best-performing model is the fourth neural network architecture, with RMSE of
+  1.9149 and MAE of 1.2327 on the official test set.
+- Gradient boosting is the closest alternative, with RMSE of 1.9429 and MAE of 1.2753.
 - High predictive accuracy is achieved using a small set of features, highlighting the
   effectiveness of distance-based pricing models.
 
