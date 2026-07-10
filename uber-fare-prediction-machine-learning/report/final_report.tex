@@ -101,7 +101,7 @@
 	\justify
 	El presente trabajo desarrolla un ejercicio aplicado de Inteligencia de Negocios orientado a la estimación de tarifas de viajes Uber en la ciudad de Nueva York, a partir de información geográfica, temporal y operativa disponible en el dataset. Se comparan modelos lineales, modelos de ensamble y redes neuronales densas para predecir la tarifa observada (\texttt{fare\_amount}).
 
-	El modelo lineal ampliado muestra una asociación positiva entre distancia y tarifa, con un coeficiente cercano a 2 USD por kilómetro y un nivel de explicación de 70.6\%. En la evaluación final sobre el mismo conjunto de prueba oficial, la red neuronal con tres capas ocultas obtuvo el menor error (RMSE = 1.9339; MAE = 1.2592), seguida por \textit{Gradient Boosting} (RMSE = 1.9632; MAE = 1.3015). En conjunto, el análisis sugiere que la distancia recorrida sigue siendo el predictor central, mientras que las variables temporales, la cantidad de pasajeros y las coordenadas geográficas aportan información adicional para mejorar la precisión. El estudio ofrece una base reproducible para ejercicios de analítica descriptiva, modelado predictivo y evaluación de desempeño en contextos de movilidad urbana.
+	El modelo lineal ampliado muestra una asociación positiva entre distancia y tarifa, con un coeficiente cercano a 2 USD por kilómetro y un nivel de explicación de 70.6\%. En la evaluación final sobre el mismo conjunto de prueba oficial, la red neuronal con cuatro capas ocultas obtuvo el menor error (RMSE = 1.9149; MAE = 1.2327), seguida por \textit{Gradient Boosting} (RMSE = 1.9429; MAE = 1.2753). En conjunto, el análisis sugiere que la distancia recorrida sigue siendo el predictor central, mientras que las variables temporales, la cantidad de pasajeros y las coordenadas geográficas aportan información adicional para mejorar la precisión. El estudio ofrece una base reproducible para ejercicios de analítica descriptiva, modelado predictivo y evaluación de desempeño en contextos de movilidad urbana.
 
 	\vspace{0.3cm}
 	\noindent\textbf{Palabras clave:} Inteligencia de Negocios, Aprendizaje Automático, Regresión Lineal, Modelos de Ensamble, Redes Neuronales, Uber, Predicción de Tarifas, Análisis de Datos, Movilidad Urbana.
@@ -599,7 +599,7 @@
 		\end{adjustbox}
 	\end{table}
 
-	Esta división constituye la base de comparación final para todos los modelos. En los modelos de ensamble y redes neuronales se utilizó un submuestreo reproducible de 60\,000 observaciones del conjunto de entrenamiento para la búsqueda de hiperparámetros y selección de arquitectura, manteniendo el mismo \texttt{random\_state}; posteriormente, los modelos seleccionados se reentrenaron y evaluaron sobre el conjunto de prueba oficial.
+	Esta división constituye la base de comparación final para todos los modelos. En los modelos de ensamble y redes neuronales se utilizó un submuestreo reproducible de 90\,000 observaciones del conjunto de entrenamiento para la búsqueda de hiperparámetros y selección de arquitectura, manteniendo el mismo \texttt{random\_state}; posteriormente, los modelos seleccionados se reentrenaron y evaluaron sobre el conjunto de prueba oficial.
 
 
 	\subsection{Modelado predictivo}
@@ -609,10 +609,10 @@
 		\item \textbf{Regresión LASSO:} versión regularizada del modelo lineal que incorpora penalización $L_1$ para prevenir sobreajuste y controlar la magnitud de los coeficientes.
 		\item \textbf{Random Forest:} ensamble de árboles de decisión utilizado para evaluar si una especificación no lineal mejora la predicción frente a los modelos lineales.
 		\item \textbf{Gradient Boosting:} modelo secuencial que ajusta sucesivos árboles a los errores del modelo anterior, incorporando hiperparámetros como número de estimadores, profundidad y tasa de aprendizaje.
-		\item \textbf{Redes neuronales densas:} tres arquitecturas del tipo \textit{feedforward} con diferente número de capas ocultas, activación ReLU y optimizador Adam.
+		\item \textbf{Redes neuronales densas:} cuatro arquitecturas del tipo \textit{feedforward} con diferente número de capas ocultas, activación ReLU y optimizador Adam.
 	\end{enumerate}
 
-	Para los modelos Random Forest, Gradient Boosting y redes neuronales se trabajó con submuestras de 60\,000 observaciones del conjunto de entrenamiento durante la etapa de búsqueda de hiperparámetros o selección de arquitectura, con el fin de equilibrar robustez y reproducibilidad local. La evaluación final de todos los modelos se realizó sobre el mismo conjunto de prueba definido en el Punto 3.
+	Para los modelos Random Forest, Gradient Boosting y redes neuronales se trabajó con submuestras de 90\,000 observaciones del conjunto de entrenamiento durante la etapa de búsqueda de hiperparámetros o selección de arquitectura, con el fin de equilibrar robustez, tiempo de entrenamiento y reproducibilidad local. La evaluación final de todos los modelos se realizó sobre el mismo conjunto de prueba definido en el Punto 3.
 
 	\subsection{Métricas de evaluación}
 	El desempeño de los modelos se midió principalmente mediante métricas de error calculadas sobre datos de prueba:
@@ -717,9 +717,9 @@
 
 	Para capturar posibles relaciones no lineales entre las variables disponibles y la tarifa, se estimaron modelos de tipo \textit{ensemble}. El primero fue \textit{Random Forest}, que combina múltiples árboles de decisión y promedia sus predicciones.
 
-	La búsqueda de hiperparámetros se realizó con una submuestra de 60{,}000 observaciones del conjunto de entrenamiento oficial. Se exploraron 12 combinaciones mediante validación cruzada de tres particiones. Los mejores valores se resumen en el \cuadroref{tab:rf_resultados}: árboles sin profundidad máxima predefinida, mínimo de 5 observaciones por división y 300 estimadores.
+	La búsqueda de hiperparámetros se realizó con una submuestra de 90{,}000 observaciones del conjunto de entrenamiento oficial. Se exploraron 16 combinaciones mediante validación cruzada de tres particiones. Los mejores valores se resumen en el \cuadroref{tab:rf_resultados}: árboles sin profundidad máxima predefinida, mínimo de 2 observaciones por división, selección de variables \texttt{sqrt} y 500 estimadores.
 
-	Tras seleccionar los hiperparámetros, el modelo se reentrenó con todo el conjunto de entrenamiento oficial y se evaluó sobre el test del Punto 3. Alcanzó un RMSE de 2.0444 y un MAE de 1.3778. La importancia de variables ubica a \texttt{distance\_km} como predictor dominante, seguido por variables temporales y geográficas de menor peso relativo.
+	Tras seleccionar los hiperparámetros, el modelo se reentrenó con todo el conjunto de entrenamiento oficial y se evaluó sobre el test del Punto 3. Alcanzó un RMSE de 1.9907 y un MAE de 1.3334. La importancia de variables ubica a \texttt{distance\_km} como predictor dominante, seguido por coordenadas geográficas y variables temporales de menor peso relativo.
 
 	\begin{table}[!htbp]
 		\centering
@@ -730,24 +730,25 @@
 				\hline
 				\textbf{Descripción} & \textbf{Valor} \\
 				\hline
-				Submuestra para búsqueda de hiperparámetros & 60{,}000 observaciones del entrenamiento \\
-				Conjunto de entrenamiento para tuning & 48{,}000 registros (80\%) \\
-				Conjunto de validación para tuning & 12{,}000 registros (20\%) \\
+				Submuestra para búsqueda de hiperparámetros & 90{,}000 observaciones del entrenamiento \\
+				Conjunto de entrenamiento para tuning & 72{,}000 registros (80\%) \\
+				Conjunto de validación para tuning & 18{,}000 registros (20\%) \\
 				Base de evaluación final & Test oficial del Punto 3 \\
-				Número total de combinaciones evaluadas & 12 \\
+				Número total de combinaciones evaluadas & 16 \\
 				\hline
 				\multicolumn{2}{l}{\textbf{Mejores hiperparámetros encontrados:}} \\
 				\hline
 				\texttt{max\_depth} & Sin límite \\
-				\texttt{min\_samples\_split} & 5 \\
-				\texttt{n\_estimators} & 300 \\
+				\texttt{max\_features} & \texttt{sqrt} \\
+				\texttt{min\_samples\_split} & 2 \\
+				\texttt{n\_estimators} & 500 \\
 				\hline
 				\multicolumn{2}{l}{\textbf{Evaluación del modelo:}} \\
 				\hline
-				RMSE validación & 2.0718 \\
-				MAE validación & 1.4262 \\
-				RMSE test oficial & 2.0444 \\
-				MAE test oficial & 1.3778 \\
+				RMSE validación & 2.0506 \\
+				MAE validación & 1.3795 \\
+				RMSE test oficial & 1.9907 \\
+				MAE test oficial & 1.3334 \\
 				\hline
 			\end{tabular}
 		\end{adjustbox}
@@ -764,9 +765,9 @@
 
 	El segundo modelo de ensamble fue \textit{Gradient Boosting}, que construye árboles de forma secuencial para corregir errores residuales del modelo anterior.
 
-	La búsqueda de hiperparámetros se realizó sobre una submuestra de 60{,}000 observaciones del conjunto de entrenamiento oficial. Se evaluaron 18 combinaciones mediante validación cruzada de tres particiones. A diferencia de \textit{Random Forest}, \textit{Gradient Boosting} construye árboles de forma iterativa, corrigiendo errores residuales del ensamble previo.
+	La búsqueda de hiperparámetros se realizó sobre una submuestra de 90{,}000 observaciones del conjunto de entrenamiento oficial. Se evaluaron 24 combinaciones mediante validación cruzada de tres particiones. A diferencia de \textit{Random Forest}, \textit{Gradient Boosting} construye árboles de forma iterativa, corrigiendo errores residuales del ensamble previo.
 
-	Los mejores resultados se alcanzaron con una tasa de aprendizaje de 0.1, profundidad máxima de 5 niveles y 300 estimadores. Tras reentrenar el modelo con todo el conjunto de entrenamiento oficial, obtuvo un RMSE de 1.9632 y un MAE de 1.3015 sobre el test del Punto 3. Al igual que en \textit{Random Forest}, la variable \texttt{distance\_km} concentra la mayor importancia relativa.
+	Los mejores resultados se alcanzaron con una tasa de aprendizaje de 0.1, profundidad máxima de 5 niveles, 500 estimadores y \texttt{subsample = 0.8}. Tras reentrenar el modelo con todo el conjunto de entrenamiento oficial, obtuvo un RMSE de 1.9429 y un MAE de 1.2753 sobre el test del Punto 3. Al igual que en \textit{Random Forest}, la variable \texttt{distance\_km} concentra la mayor importancia relativa.
 
 	\begin{table}[!htbp]
 		\centering
@@ -777,24 +778,25 @@
 				\hline
 				\textbf{Descripción} & \textbf{Valor} \\
 				\hline
-				Submuestra para búsqueda de hiperparámetros & 60{,}000 observaciones del entrenamiento \\
-				Conjunto de entrenamiento para tuning & 48{,}000 registros (80\%) \\
-				Conjunto de validación para tuning & 12{,}000 registros (20\%) \\
+				Submuestra para búsqueda de hiperparámetros & 90{,}000 observaciones del entrenamiento \\
+				Conjunto de entrenamiento para tuning & 72{,}000 registros (80\%) \\
+				Conjunto de validación para tuning & 18{,}000 registros (20\%) \\
 				Base de evaluación final & Test oficial del Punto 3 \\
-				Número total de combinaciones evaluadas & 18 \\
+				Número total de combinaciones evaluadas & 24 \\
 				\hline
 				\multicolumn{2}{l}{\textbf{Mejores hiperparámetros encontrados:}} \\
 				\hline
 				\texttt{learning\_rate} & 0.1 \\
 				\texttt{max\_depth} & 5 \\
-				\texttt{n\_estimators} & 300 \\
+				\texttt{n\_estimators} & 500 \\
+				\texttt{subsample} & 0.8 \\
 				\hline
 				\multicolumn{2}{l}{\textbf{Evaluación del modelo:}} \\
 				\hline
-				RMSE validación & 1.9732 \\
-				MAE validación & 1.3123 \\
-				RMSE test oficial & 1.9632 \\
-				MAE test oficial & 1.3015 \\
+				RMSE validación & 1.9990 \\
+				MAE validación & 1.3015 \\
+				RMSE test oficial & 1.9429 \\
+				MAE test oficial & 1.2753 \\
 				\hline
 			\end{tabular}
 		\end{adjustbox}
@@ -811,9 +813,9 @@
 
 	\subsection{Resultados de las redes neuronales}
 
-	Como complemento a los modelos basados en árboles, se implementaron tres arquitecturas de redes neuronales densas. La selección se realizó sobre una submuestra de 60{,}000 observaciones del conjunto de entrenamiento, usando activación ReLU, optimización Adam y parada temprana. La mejor arquitectura se reentrenó con el conjunto de entrenamiento oficial y se evaluó sobre el test del Punto 3.
+	Como complemento a los modelos basados en árboles, se implementaron cuatro arquitecturas de redes neuronales densas. La selección se realizó sobre una submuestra de 90{,}000 observaciones del conjunto de entrenamiento, usando activación ReLU, optimización Adam y parada temprana. La mejor arquitectura se reentrenó con el conjunto de entrenamiento oficial y se evaluó sobre el test del Punto 3.
 
-	El desempeño de cada red se evaluó con RMSE y MAE, como se resume en el \cuadroref{tab:nn_resultados}. En validación, la arquitectura con tres capas ocultas presentó el menor RMSE. En el test oficial obtuvo un RMSE de 1.9339 y un MAE de 1.2592, convirtiéndose en el modelo con mejor desempeño global del ejercicio.
+	El desempeño de cada red se evaluó con RMSE y MAE, como se resume en el \cuadroref{tab:nn_resultados}. En validación, la arquitectura con cuatro capas ocultas presentó el menor RMSE. En el test oficial obtuvo un RMSE de 1.9149 y un MAE de 1.2327, convirtiéndose en el modelo con mejor desempeño global del ejercicio.
 
 	\begin{table}[!htbp]
 		\centering
@@ -824,9 +826,10 @@
 				\hline
 				\textbf{Arquitectura} & \textbf{RMSE validación} & \textbf{MAE validación} & \textbf{Épocas} \\
 				\hline
-				Modelo 1 (1 capa oculta, 32 neuronas) & 2.0232 & 1.3707 & 120 \\
-				Modelo 2 (2 capas ocultas, 64--32 neuronas) & 1.9786 & 1.2893 & 59 \\
-				Modelo 3 (3 capas ocultas, 128--64--32 neuronas) & 1.9687 & 1.2755 & 46 \\
+				Modelo 1 (1 capa oculta, 32 neuronas) & 2.0648 & 1.3528 & 180 \\
+				Modelo 2 (2 capas ocultas, 64--32 neuronas) & 2.0279 & 1.3109 & 52 \\
+				Modelo 3 (3 capas ocultas, 128--64--32 neuronas) & 1.9959 & 1.2846 & 74 \\
+				Modelo 4 (4 capas ocultas, 256--128--64--32 neuronas) & 1.9935 & 1.2827 & 67 \\
 				\hline
 			\end{tabular}
 		\end{adjustbox}
@@ -845,9 +848,9 @@
 				\hline
 				\textbf{Modelo} & \textbf{RMSE} & \textbf{MAE} & \textbf{Base de evaluación} \\
 				\hline
-				Red neuronal -- Modelo 3 & 1.9339 & 1.2592 & Test oficial Punto 3 \\
-				\textit{Gradient Boosting} & 1.9632 & 1.3015 & Test oficial Punto 3 \\
-				\textit{Random Forest} & 2.0444 & 1.3778 & Test oficial Punto 3 \\
+				Red neuronal -- Modelo 4 & 1.9149 & 1.2327 & Test oficial Punto 3 \\
+				\textit{Gradient Boosting} & 1.9429 & 1.2753 & Test oficial Punto 3 \\
+				\textit{Random Forest} & 1.9907 & 1.3334 & Test oficial Punto 3 \\
 				OLS & 2.3465 & 1.6362 & Test oficial Punto 3 \\
 				LASSO & 2.3465 & 1.6362 & Test oficial Punto 3 \\
 				\hline
@@ -855,7 +858,7 @@
 		\end{adjustbox}
 	\end{table}
 
-	La \figuraref{fig:performance_final_rmse} complementa la comparación tabular y ordena los modelos según RMSE. La red neuronal de tres capas ocultas alcanza el menor error, seguida de cerca por \textit{Gradient Boosting}. Los modelos lineales mejoran respecto de la especificación simple gracias al set ampliado de variables, aunque quedan por detrás de los enfoques no lineales.
+	La \figuraref{fig:performance_final_rmse} complementa la comparación tabular y ordena los modelos según RMSE. La red neuronal de cuatro capas ocultas alcanza el menor error, seguida de cerca por \textit{Gradient Boosting}. Los modelos lineales mejoran respecto de la especificación simple gracias al set ampliado de variables, aunque quedan por detrás de los enfoques no lineales.
 
 	\begin{figure}[!htbp]
 		\centering
@@ -864,22 +867,22 @@
 		\label{fig:performance_final_rmse}
 	\end{figure}
 
-	Adicionalmente, la \figuraref{fig:residuos_mejor_modelo} presenta un diagnóstico de residuos para la red neuronal de tres capas ocultas, identificada como el modelo con menor RMSE en la comparación final. La nube de puntos se concentra alrededor de cero, con mayor dispersión en algunos rangos de predicción.
+	Adicionalmente, la \figuraref{fig:residuos_mejor_modelo} presenta un diagnóstico de residuos para la red neuronal de cuatro capas ocultas, identificada como el modelo con menor RMSE en la comparación final. La nube de puntos se concentra alrededor de cero, con mayor dispersión en algunos rangos de predicción.
 
 	\begin{figure}[!htbp]
 		\centering
 		\includegraphics[width=0.74\textwidth,height=0.34\textheight,keepaspectratio]{../figures/20.png}
-		\caption{Residuos del mejor modelo final, correspondiente a la red neuronal de tres capas ocultas, sobre el conjunto de prueba oficial.}
+		\caption{Residuos del mejor modelo final, correspondiente a la red neuronal de cuatro capas ocultas, sobre el conjunto de prueba oficial.}
 		\label{fig:residuos_mejor_modelo}
 	\end{figure}
 
-	En conjunto, los enfoques no lineales presentan una ventaja clara frente a los modelos lineales. La red neuronal de tres capas ocultas obtuvo el menor RMSE, seguida por \textit{Gradient Boosting} y \textit{Random Forest}. OLS y LASSO conservan valor como referencias interpretables y de bajo costo computacional.
+	En conjunto, los enfoques no lineales presentan una ventaja clara frente a los modelos lineales. La red neuronal de cuatro capas ocultas obtuvo el menor RMSE, seguida por \textit{Gradient Boosting} y \textit{Random Forest}. OLS y LASSO conservan valor como referencias interpretables y de bajo costo computacional.
 
 	\section{Discusión}
 
 	Los resultados muestran que la distancia recorrida es el principal predictor disponible de la tarifa, incluso después de incorporar variables temporales, cantidad de pasajeros y coordenadas geográficas. La relación positiva entre \texttt{distance\_km} y \texttt{fare\_amount} es consistente con una estructura de precios donde conviven un componente fijo y uno proporcional a la distancia. En ese sentido, el modelo lineal funciona como referencia interpretable de la tendencia general.
 
-	La ampliación del set de predictores produjo una mejora importante frente a la especificación basada únicamente en distancia. La red neuronal de tres capas ocultas obtuvo el menor error sobre el test oficial, mientras que \textit{Gradient Boosting} quedó muy cerca y ofrece una alternativa competitiva con mayor facilidad de interpretación mediante importancia de variables. Aun así, persisten errores asociados a factores no observados, especialmente en algunos rangos de tarifa.
+	La ampliación del set de predictores y el entrenamiento más amplio produjeron una mejora importante frente a la especificación basada únicamente en distancia. La red neuronal de cuatro capas ocultas obtuvo el menor error sobre el test oficial, mientras que \textit{Gradient Boosting} quedó muy cerca y ofrece una alternativa competitiva con mayor facilidad de interpretación mediante importancia de variables. Aun así, persisten errores asociados a factores no observados, especialmente en algunos rangos de tarifa.
 
 	Estos resultados deben interpretarse dentro de los límites del dataset. Aunque se incorporaron variables temporales derivadas del momento del viaje, no se cuenta con información sobre duración real, tráfico, clima, demanda local, método de asignación del viaje o tarifas dinámicas, variables que podrían explicar parte de la dispersión restante. Además, el análisis se restringe a la ciudad de Nueva York, por lo que no conviene extrapolar los resultados directamente a otras ciudades sin una validación adicional.
 
@@ -891,7 +894,7 @@
 
 	La evidencia muestra que \texttt{distance\_km} es un predictor central de \texttt{fare\_amount}. El modelo OLS permitió interpretar esta relación de forma directa dentro de una especificación ampliada, mientras que LASSO ofreció una referencia regularizada sin modificar sustancialmente el desempeño del modelo lineal.
 
-	En la comparación final sobre el test oficial, los modelos de aprendizaje automático obtuvieron una ventaja clara frente a los modelos lineales. La red neuronal de tres capas ocultas presentó el menor RMSE, seguida por \textit{Gradient Boosting} y \textit{Random Forest}. Este resultado sugiere que la predicción de tarifas mejora cuando la distancia se complementa con variables temporales y geográficas.
+	En la comparación final sobre el test oficial, los modelos de aprendizaje automático obtuvieron una ventaja clara frente a los modelos lineales. La red neuronal de cuatro capas ocultas presentó el menor RMSE, seguida por \textit{Gradient Boosting} y \textit{Random Forest}. Este resultado sugiere que la predicción de tarifas mejora cuando la distancia se complementa con variables temporales y geográficas.
 
 	La principal limitación del estudio es la ausencia de variables contextuales que pueden afectar la tarifa final, como duración efectiva del viaje, tráfico, clima, demanda o mecanismos de tarifa dinámica. Futuras extensiones deberían incorporar estas dimensiones, evaluar la estabilidad temporal del modelo y comparar su desempeño en otras ciudades o ventanas de tiempo.
 
@@ -926,10 +929,6 @@
 	\begin{itemize}
 		\item Repositorio GitHub: \url{https://github.com/delgadiljulian/predictive-analytics-ride-fare-estimation}
 	\end{itemize}
-
-	El acceso abierto al repositorio permite reproducir el flujo completo de lectura de datos, limpieza, análisis exploratorio, modelado predictivo y generación de resultados.
-
-
 
 \end{document}
 
